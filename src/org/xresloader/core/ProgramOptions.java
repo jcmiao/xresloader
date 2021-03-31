@@ -61,6 +61,7 @@ public class ProgramOptions {
     public String xmlRootName = "root";
     public String javascriptExport = null;
     public String javascriptGlobalVar = "";
+    public String[] field_tags = null;
 
     private ProgramOptions() {
         dataSourceMetas = new String[] {};
@@ -187,6 +188,7 @@ public class ProgramOptions {
 
         options.addOption(Option.builder().longOpt("javascript-global")
                 .desc("set javascript export namespace of window or global").hasArg().argName("NAME").build());
+        options.addOption(Option.builder().longOpt("field_tags").desc("export fields by tags").hasArg().argName("TAG NAME").build());
 
         options.addOption(null, "disable-excel-formular", false,
                 "disable formular in excel. will be faster when convert data.");
@@ -310,6 +312,9 @@ public class ProgramOptions {
         xmlRootName = cmd.getOptionValue("xml-root", xmlRootName);
         javascriptExport = cmd.getOptionValue("javascript-export", javascriptExport);
         javascriptGlobalVar = cmd.getOptionValue("javascript-global", javascriptGlobalVar);
+        String tags = cmd.getOptionValue("field_tags", "");
+        field_tags = tags.split(",");
+        // ProgramOptions.getLoger().info("tags: %s", tags);
 
         // output dir
         outputDirectory = cmd.getOptionValue('o', ".");

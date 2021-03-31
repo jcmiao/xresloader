@@ -156,6 +156,10 @@ public class main {
     }
 
     private static int build_group(String[] args) throws InitializeException {
+        for (String s : args)
+        {
+            ProgramOptions.getLoger().info("argument : %s", s);
+        }
         int ret = ProgramOptions.getInstance().init(args);
         if (ret < 0) {
             return 1;

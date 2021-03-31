@@ -414,6 +414,12 @@ public class DataDstPb extends DataDstImpl {
             child_field.mutableExtension().plainSeparator = fd.getOptions().getExtension(Xresloader.fieldSeparator);
         }
 
+        if (fd.getOptions().hasExtension(Xresloader.fieldTags))
+        {
+            String tags = fd.getOptions().getExtension(Xresloader.fieldTags);
+            child_field.mutableExtension().tags = tags.replaceAll("\\s", "").split(",");
+        }
+
         // setup UE extension
         if (fd.getOptions().hasExtension(XresloaderUe.keyTag)) {
             child_field.mutableExtension().mutableUE().keyTag = fd.getOptions().getExtension(XresloaderUe.keyTag);
@@ -1379,7 +1385,13 @@ public class DataDstPb extends DataDstImpl {
     private boolean dumpMessage(DynamicMessage.Builder builder, DataDstWriterNode node) throws ConvException {
         boolean ret = false;
 
+        //jcmiaotodo: 这里将列作一个判断，是否要导出
         for (Map.Entry<String, DataDstWriterNode.DataDstChildrenNode> c : node.getChildren().entrySet()) {
+            if (c.getValue().ignored)
+            {
+                continue;
+            }
+            // ProgramOptions.getLoger().info("dumpMessage name: %s - %s", node.getMessageName(), c.getKey());
             if (c.getValue().isOneof()) {
                 // dump oneof data
                 for (DataDstWriterNode child : c.getValue().nodes) {

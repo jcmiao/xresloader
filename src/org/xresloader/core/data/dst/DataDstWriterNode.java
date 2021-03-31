@@ -40,6 +40,7 @@ public class DataDstWriterNode {
         public String description = null;
         public String verifier = null;
         public String plainSeparator = null;
+        public String[] tags = null;
         public int ratio = 1;
         private DataDstFieldExtUE ue = null;
 
@@ -404,6 +405,7 @@ public class DataDstWriterNode {
         public CHILD_NODE_TYPE mode = CHILD_NODE_TYPE.STANDARD;
         public Object rawDescriptor = null;
         public ArrayList<DataDstWriterNode> nodes = null;
+        public boolean ignored = false;
 
         public boolean isRequired() {
             return this.innerFieldDesc != null && this.innerFieldDesc.isRequired();
@@ -656,6 +658,33 @@ public class DataDstWriterNode {
             res.innerFieldDesc = child_field_desc;
             res.innerOneofDesc = child_oneof_desc;
             res.rawDescriptor = _raw_descriptor;
+
+            if (res.innerFieldDesc != null && res.innerFieldDesc.mutableExtension().tags != null)
+            {
+                ProgramOptions.getLoger().info("cmd's field_tags: %s", ProgramOptions.getInstance().field_tags.toString());
+
+                for (String s : ProgramOptions.getInstance().field_tags)
+                {
+                    ProgramOptions.getLoger().info("cmd one tag is %s", s);
+                }
+                boolean hastag = false;
+                String[] tags = res.innerFieldDesc.mutableExtension().tags;
+                for (String s: tags)
+                {
+                    ProgramOptions.getLoger().info("config tag is %s", s);
+                    //jcmiaotodo: server标记改由命令行参数传递
+                    for (String export_tag : ProgramOptions.getInstance().field_tags)
+                    {
+                        if (s.equals(export_tag))
+                        {
+                            hastag = true;
+                            break;
+                        }
+                    }
+                    if (hastag) break;
+                }
+                res.ignored = tags.length > 0 && !hastag;
+            }
         }
 
         res.mode = mode;
