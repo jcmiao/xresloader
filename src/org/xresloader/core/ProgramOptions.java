@@ -188,7 +188,7 @@ public class ProgramOptions {
 
         options.addOption(Option.builder().longOpt("javascript-global")
                 .desc("set javascript export namespace of window or global").hasArg().argName("NAME").build());
-        options.addOption(Option.builder().longOpt("field_tags").desc("export fields by tags").hasArg().argName("TAG NAME").build());
+        options.addOption(Option.builder("e").longOpt("field_tags").desc("export fields by tags").hasArg().argName("TAG NAME").build());
 
         options.addOption(null, "disable-excel-formular", false,
                 "disable formular in excel. will be faster when convert data.");
