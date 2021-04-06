@@ -661,17 +661,17 @@ public class DataDstWriterNode {
 
             if (res.innerFieldDesc != null && res.innerFieldDesc.mutableExtension().tags != null)
             {
-                ProgramOptions.getLoger().info("cmd's field_tags: %s", ProgramOptions.getInstance().field_tags.toString());
+                // ProgramOptions.getLoger().info("cmd's field_tags: %s", ProgramOptions.getInstance().field_tags.toString());
 
-                for (String s : ProgramOptions.getInstance().field_tags)
-                {
-                    ProgramOptions.getLoger().info("cmd one tag is %s", s);
-                }
+                // for (String s : ProgramOptions.getInstance().field_tags)
+                // {
+                //     ProgramOptions.getLoger().info("cmd one tag is %s", s);
+                // }
                 boolean hastag = false;
                 String[] tags = res.innerFieldDesc.mutableExtension().tags;
                 for (String s: tags)
                 {
-                    ProgramOptions.getLoger().info("config tag is %s", s);
+                    // ProgramOptions.getLoger().info("config tag is %s", s);
                     //jcmiaotodo: server标记改由命令行参数传递
                     for (String export_tag : ProgramOptions.getInstance().field_tags)
                     {
