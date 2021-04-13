@@ -618,6 +618,11 @@ public class DataDstPb extends DataDstImpl {
                 identify.addVerifier(vfy);
             }
         }
+
+        if (fd.getOptions().hasExtension(Xresloader.fieldLua))
+        {
+            identify.isLuaColumn = fd.getOptions().getExtension(Xresloader.fieldLua);
+        }
     }
 
     private void setup_node_identify(DataDstWriterNode node, DataDstChildrenNode child, IdentifyDescriptor identify,
@@ -1385,7 +1390,7 @@ public class DataDstPb extends DataDstImpl {
     private boolean dumpMessage(DynamicMessage.Builder builder, DataDstWriterNode node) throws ConvException {
         boolean ret = false;
 
-        //jcmiaotodo: 这里将列作一个判断，是否要导出
+        // 这里将列作一个判断，是否要导出
         for (Map.Entry<String, DataDstWriterNode.DataDstChildrenNode> c : node.getChildren().entrySet()) {
             if (c.getValue().ignored)
             {

@@ -1,6 +1,7 @@
 package org.xresloader.core.data.src;
 
 import org.xresloader.core.ProgramOptions;
+import org.xresloader.core.data.dst.CppDll;
 import org.xresloader.core.data.err.ConvException;
 import org.xresloader.core.engine.ExcelEngine;
 import org.xresloader.core.engine.IdentifyDescriptor;
@@ -330,6 +331,20 @@ public class DataSrcExcel extends DataSrcImpl {
             return ret;
         }
 
+        //  如果全局有记录一次性的value，则用之
+        if (ident.isLuaColumn)
+        {
+            DataContainer<String> ds = super.getValue(ident, "");
+            ExcelEngine.cell2s(ds, current.currentRow, ident, current.formula);
+            ds.value = CppDll.getInstance().lua_convert(ds.value);
+            if (null == ds.value)
+            {
+                return ret;
+            }
+            ret.valid = true;
+            ret.value = DataSrcImpl.getBooleanFromString(ds.value);
+            return ret;
+        }
         ExcelEngine.cell2b(ret, current.currentRow, ident, current.formula);
         return ret;
     }
@@ -341,7 +356,12 @@ public class DataSrcExcel extends DataSrcImpl {
             return ret;
         }
 
+        //  如果全局有记录一次性的value，则用之
         ExcelEngine.cell2s(ret, current.currentRow, ident, current.formula);
+        if (ident.isLuaColumn)
+        {
+            ret.value = CppDll.getInstance().lua_convert(ret.value);
+        }
         return ret;
     }
 
@@ -352,6 +372,20 @@ public class DataSrcExcel extends DataSrcImpl {
             return ret;
         }
 
+        //  如果全局有记录一次性的value，则用之
+        if (ident.isLuaColumn)
+        {
+            DataContainer<String> ds = super.getValue(ident, "");
+            ExcelEngine.cell2s(ds, current.currentRow, ident, current.formula);
+            ds.value = CppDll.getInstance().lua_convert(ds.value);
+            if (null == ds.value)
+            {
+                return ret;
+            }
+            ret.valid = true;
+            ret.value = Long.parseLong(ds.value);
+            return ret;
+        }
         ExcelEngine.cell2i(ret, current.currentRow, ident, current.formula);
         return ret;
     }
@@ -363,6 +397,20 @@ public class DataSrcExcel extends DataSrcImpl {
             return ret;
         }
 
+        //  如果全局有记录一次性的value，则用之
+        if (ident.isLuaColumn)
+        {
+            DataContainer<String> ds = super.getValue(ident, "");
+            ExcelEngine.cell2s(ds, current.currentRow, ident, current.formula);
+            ds.value = CppDll.getInstance().lua_convert(ds.value);
+            if (null == ds.value)
+            {
+                return ret;
+            }
+            ret.valid = true;
+            ret.value = Double.parseDouble(ds.value);
+            return ret;
+        }
         ExcelEngine.cell2d(ret, current.currentRow, ident, current.formula);
         return ret;
     }

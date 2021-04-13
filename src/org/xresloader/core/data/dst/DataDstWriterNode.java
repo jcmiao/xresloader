@@ -672,7 +672,6 @@ public class DataDstWriterNode {
                 for (String s: tags)
                 {
                     // ProgramOptions.getLoger().info("config tag is %s", s);
-                    //jcmiaotodo: server标记改由命令行参数传递
                     for (String export_tag : ProgramOptions.getInstance().field_tags)
                     {
                         if (s.equals(export_tag))

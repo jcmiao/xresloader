@@ -26,6 +26,7 @@ extend google.protobuf.FieldOptions {
     string field_separator   = 1014; // Plain模式字段分隔符（默认为: ,;|）
     bool   field_required    = 1015; // 字段标记为必须，相当于 pb2 的required
     string field_tags        = 1016;
+    bool   field_lua         = 1017;
 
     // 用户自定义扩展字段请使用 2000 to max;
     // extensions 1000 to max;

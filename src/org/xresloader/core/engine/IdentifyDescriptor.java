@@ -37,6 +37,8 @@ public class IdentifyDescriptor {
      */
     public DataDstWriterNode referToWriterNode;
 
+    public boolean isLuaColumn = false;
+
     public IdentifyDescriptor() {
     }
 

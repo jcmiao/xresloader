@@ -11,6 +11,8 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.xresloader.core.data.dst.CppDll;
 import org.xresloader.core.data.dst.DataDstImpl;
 import org.xresloader.core.data.dst.DataDstJavascript;
 import org.xresloader.core.data.dst.DataDstJson;
