@@ -358,9 +358,20 @@ public class DataSrcExcel extends DataSrcImpl {
 
         //  如果全局有记录一次性的value，则用之
         ExcelEngine.cell2s(ret, current.currentRow, ident, current.formula);
-        if (ident.isLuaColumn)
+        if (ident.isLuaColumn && ret.valid)
         {
+            // ProgramOptions.getLoger().info("excel original: %s", ret.value);
+
             ret.value = CppDll.getInstance().lua_convert(ret.value);
+            if (ret.value != null)
+            {
+                // ProgramOptions.getLoger().info("excel after lua convert: %s", ret.value);
+            }
+            else 
+            {
+                // ProgramOptions.getLoger().info("excel after lua convert: null");
+                ret.value = "";
+            }
         }
         return ret;
     }
