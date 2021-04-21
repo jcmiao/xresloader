@@ -1,5 +1,7 @@
 package org.xresloader.core.data.dst;
 
+import org.xresloader.core.ProgramOptions;
+
 public class CppDll {
     static {
         System.loadLibrary("lua_col");
@@ -24,10 +26,21 @@ public class CppDll {
             return null;
         }
 
+        if (s.trim().isEmpty())
+        {
+            return null;
+        }
+
         String ret = do_lua_string(s);
         if (ret == null || ret.length() == 0 || ret.charAt(0) == '0')
         {
-            return null;
+            String errstr = String.format("%s lua_convert error ", s);
+            if (ret != null)
+            {
+                errstr += ret;
+            }
+            ProgramOptions.getLoger().error(errstr);
+            throw new java.lang.Error(errstr);
         }
         return ret.substring(1);
     }
